@@ -1,0 +1,296 @@
+/*
+	UNIT 1: 
+		COMPLETED THE WHOLE SQL
+			3
+    
+	UNIT 2:
+			NO SQL
+
+	UNIT 2:
+  ````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+  
+		CLOUD
+
+
+
+
+		EXPERIMENT 1:
+
+
+
+
+		EXP 8 - SQL
+		EXP 9 AND 10: NO SQL AND CLOUD
+
+		MARKING SCHEME
+			EACH EXP: 30 MARKS
+					15: CONDUCT + GITHUB PUSH
+					10: VIVA
+					5: LEETCODE
+*/
+
+
+/*
+Easy-Level Problem
+
+Problem Title: Author-Book Relationship Using Joins and Basic SQL Operations
+Procedure (Step-by-Step):
+Design two tables — one for storing author details and the other for book details.
+
+Ensure a foreign key relationship from the book to its respective author.
+
+Insert at least three records in each table.
+
+Perform an INNER JOIN to link each book with its author using the common author ID.
+
+Select the book title, author name, and author’s country.
+
+Sample Output Description:
+
+When the join is performed, we get a list where each book title is shown along 
+with its author’s name and their country.
+
+*/
+
+/*
+
+	EMPID(P.K)      EMP_NAME     MANAGER_ID(F.K)
+	  1            A             2
+	  2            B             1
+
+
+	  OUTPUT:
+	  EMP_NAME     MANAGER_NAME
+	     A             B
+		 B             A
+
+*/
+
+CREATE DATABASE AIT_1A
+
+USE AIT_1A
+--COMMENTS
+CREATE TABLE TBL_AUTHOR
+(
+	AUTHOR_ID INT PRIMARY KEY,
+	AUTHOR_NAME VARCHAR(MAX),
+	COUNTRY VARCHAR(MAX)
+)
+
+CREATE TABLE TBL_BOOKS
+(	
+	BOOK_ID INT PRIMARY KEY,
+	BOOK_TITLE VARCHAR(MAX),
+	AUTHORID INT
+	FOREIGN KEY (AUTHORID) REFERENCES TBL_AUTHOR(AUTHOR_ID)
+)
+
+/*
+	NO IF MIN TABLES: 1
+	CONDITION: ATLEAST ONE COLUMN SHOULD BE SAME
+
+	TYPES:
+		1. INNER JOIN (MATCHING RECORDS: BASED COMMON COLUMN)
+		2. LEFT OUTER JOIN (LEFT TABLE WHOLE DATA + COMMON DATA)
+		3. RIGHT OUTER JOIN(RIGHT TABLE WHOLE DATA + COMMON DATA)
+		4. FULL OUTER JOIN (L + R + COMMON DATA)
+		5. SELF JOIN (1)
+		6. LEFT EXCLUSIVE JOIN
+		7. RIGHT EXCLUSIVE JOIN
+*/
+
+--SYNATX: BOOK NAME
+SELECT B.BOOK_TITLE AS [BOOK NAME], A.AUTHOR_NAME, A.COUNTRY
+FROM TBL_BOOKS AS B
+INNER JOIN
+TBL_AUTHOR AS A
+ON
+B.AUTHORID = A.AUTHOR_ID
+
+/*
+	Medium-Level Problem
+
+Problem Title: Department-Course Subquery and Access Control (DCL): GRANT & REVOKE
+Procedure (Step-by-Step):
+
+Design normalized tables for departments and the courses they offer, maintaining a foreign key relationship.
+
+Insert five departments and at least ten courses across those departments.
+
+Use a subquery to count the number of courses under each department. GROUP BY
+
+Filter and retrieve only those departments that offer more than two courses.
+
+Grant SELECT-only access on the courses table to a specific user.
+
+Sample Output Description:
+
+The result shows the names of departments which are associated with more than two courses in the system.
+
+
+
+*/
+
+/*
+		DCL : GRANT AND REVOKE
+			
+			EMPLOYEE - SELECT, INSERT UPDATE AND DELETE AND COMMANDS - PERMISSION
+
+			GRANT PERMISSION/PRIV ON TBL_NAME TO USER_NAME
+			
+			GRANT SELECT, UPDATE ON EMPLOYEE TO ALOK_04
+
+			REVOKE PERMISSION/PRIV ON TBK_NAME FROM USER_NAME
+
+			REVOKE UPDATE ON EMPLOYEEE FROM ALOK_04
+
+
+			EMPLOYEE(EMPID, EMPNAME, SALARY)
+
+
+			SALARY 
+			70000
+			65000
+			32000
+			24000
+
+			PS: FIND THE 2ND HIGHEST SALARY
+
+			AGG FUN: COUNT, SUM, MIN, MAX, AVG
+
+			SELECT MAX(SALARY) FROM EMPLOYEE - 70000 - Q1
+
+
+			SELECT MAX(SALARY) FROM EMPLOYEE WHERE SALARY NOT IN (Q1)
+
+
+			EMP_CITY   EMP_ID
+			 A
+			 B
+			 A
+			 C
+			 A
+			 B
+			 B
+			 A
+
+			 A -10
+			 B -6
+			 C -2
+
+
+*/
+
+
+--IN ORDER TO CREATE USER
+-- 1. TO CREATE THE LOGIN - ADMIN
+-- 2. TO CREATE THE USER
+
+
+-- 1. TO CREATE THE LOGIN - ADMIN
+
+CREATE LOGIN TEST_LOGIN
+WITH PASSWORD = 'TESTLOGIN@123';
+
+CREATE USER TEST_USER
+FOR LOGIN TEST_LOGIN
+
+
+EXECUTE AS USER = 'TEST_USER'
+
+GRANT SELECT, UPDATE ON COURSE TO TEST_USER
+
+
+
+
+PRACTICAL 2 (LECTURE-2)
+
+JOINS (In the backend basically cartesian product is basically working )
+
+1. contition for joins are :
+   There should be atleast one tables 
+   Atleast one column should be same(The values must be same name not need to be same) 
+
+2. Inner Join( Matching Data /Common data)
+  Left outer join/Left join (Left table whole data and right table common data)
+  Right outer join (Right table whole data and the left table common data only)
+  Full outer join (Whole data Left + Right)
+  * Self join (tricky case) (min table is : 1) (The join is with the table itself) 
+
+** Alias: These are the temporary names or temporary nomenclature
+
+****Syntax short codes:******
+
+# Inner join
+
+select employee_tbl .*, department.*
+from employee_tbl
+inner join
+department
+on
+employee_tbl.emp_id = department.emp_id
+
+# Left outer join
+
+select employee_tbl .*, department.*
+from employee_tbl
+left outer join
+department
+on
+employee_tbl.emp_id = department.emp_id
+
+# Right outer join
+
+select employee_tbl .*, department.*
+from employee_tbl
+Right outer join
+department
+on
+employee_tbl.emp_id = department.emp_id
+
+# Full outer join
+select employee_tbl .*, department.*
+from employee_tbl as e #if we are using alias
+full outer join
+department as d #if we are using alias
+on
+employee_tbl.emp_id = department.emp_id
+
+# Left exclusive join 
+This fetches the rows correspond to the null values
+
+select e* 
+from employee_tbl as e
+left outer join
+department
+on
+employee_tbl.emp_id = department.emp_id
+
+----------SELF JOIN PRACTICAL QUERY ----------
+
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50) NOT NULL,
+    Department VARCHAR(50) NOT NULL,
+    ManagerID INT NULL  G
+);
+
+INSERT INTO Employee (EmpID, EmpName, Department, ManagerID)
+VALUES
+(1, 'Alice', 'HR', NULL),        
+(2, 'Bob', 'Finance', 1),
+(3, 'Charlie', 'IT', 1),
+(4, 'David', 'Finance', 2)
+
+SELECT * FROM Employee;
+
+--SELF JOIN : LEFT/ RIGHT
+
+SELECT E1.EmpName AS [Employee Name], E2.EmpName AS [Manager Name],
+	E1.Department AS [Employee Dept], E2.Department AS [Manager Dept]
+FROM
+Employee AS E1
+LEFT OUTER JOIN
+Employee AS E2
+ON
+E1.ManagerID = E2.EmpID;
