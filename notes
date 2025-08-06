@@ -294,3 +294,10 @@ LEFT OUTER JOIN
 Employee AS E2
 ON
 E1.ManagerID = E2.EmpID;
+
+
+
+| Note : there can be                          |
+|more than one foreign key		       |
+|but there can only be one primary key	       |
+|______________________________________________|
