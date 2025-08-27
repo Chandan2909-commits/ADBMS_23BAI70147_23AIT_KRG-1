@@ -301,3 +301,13 @@ E1.ManagerID = E2.EmpID;
 |more than one foreign key		       |
 |but there can only be one primary key	       |
 |______________________________________________|
+
+
+PL/SQL : Stored procedures, functions, Triggers , Views , collections
+1. Conditional statements : If/else Else-if ladder, case statements 
+
+----Sql server
+IF CONDITION 
+	PRINT ''
+ELSE
+	PRINT ''
